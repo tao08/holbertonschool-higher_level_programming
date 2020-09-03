@@ -4,10 +4,10 @@ if __name__ == "__main__":
     n = len(sys.argv) - 1
     argv = sys.argv
 if n == 0:
-    print("0 arguments:")
+    print("0 arguments.")
 else:
     if n == 1:
-        print("{} arguments:".format(n))
+        print("{} argument:".format(n))
         print("{}: {}".format(n, argv[n]))
     else:
         print("{} arguments:".format(n))
