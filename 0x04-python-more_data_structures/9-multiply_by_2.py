@@ -4,4 +4,3 @@ def multiply_by_2(a_dictionary):
     for g in dicci:
         dicci[g] *= 2
     return(dicci)
-    
