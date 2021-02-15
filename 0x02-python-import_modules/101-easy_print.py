@@ -1,2 +1,2 @@
 #!/usr/bin/python3
-import file7.py
+import file_python
