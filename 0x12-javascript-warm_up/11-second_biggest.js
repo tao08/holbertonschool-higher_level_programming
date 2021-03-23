@@ -11,3 +11,4 @@ if (process.argv.length < 4) {
     list.push(Number(process.argv[count]));
   }
   console.log(list.sort()[list.length - 2]);
+}
