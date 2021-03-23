@@ -1,8 +1,6 @@
 #!/usr/bin/node
-const myObject = {
-  type: 'object',
-  value: 12
+// function that returns the addition of 2 integers.
+
+exports.add = function (a, b) {
+  return a + b;
 };
-console.log(myObject);
-myObject.value = 89;
-console.log(myObject);
