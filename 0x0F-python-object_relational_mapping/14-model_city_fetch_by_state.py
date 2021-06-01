@@ -1,23 +1,34 @@
 #!/usr/bin/python3
-# prints all city object from the database.
+"""
+    deletes all State objects with a name
+    containing the letter a from the database hbtn_0e_6_usa
+"""
 
-import sqlalchemy
-import sys
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from model_state import Base, State
-from model_city import City
 
 if __name__ == "__main__":
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format
-                           (sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
-    Base.metadata.create_all(engine)
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    item = session.query(City, State).filter(City.state_id == State.id)\
-                                     .order_by(City.id).all()
-    for city, state in item:
-        print("{}: ({}) {}".format(state.name, city.id, city.name))
 
-    session.close()
+    from sys import argv
+    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy import (create_engine)
+    from model_state import State
+    from model_city import Base, City
+
+    # Parameter variables
+    user = argv[1]
+    passw = argv[2]
+    database = argv[3]
+
+    # ᐁ Create the engine
+    engine = create_engine(
+                    'mysql+mysqldb://{}:{}@localhost/{}'
+                    .format(user, passw, database), pool_pre_ping=True
+                    )
+    # create the session instant and bind the engine
+    Session = sessionmaker(bind=engine)
+    # Create the session
+    session = Session()
+    # Query instant
+    _query = session.query(City, State).filter(City.state_id == State.id)
+    # Going through each object in _query
+    for cities, states in _query:
+        print("{}: ({}) {}".format(states.name, cities.id, cities.name))
