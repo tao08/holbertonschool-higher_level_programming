@@ -1,24 +1,41 @@
 #!/usr/bin/python3
-# Deletes all states object with a name containing the letter
-# a from the database.
-
-import sqlalchemy
-import sys
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-
-from model_state import Base, State
+"""
+    script that deletes all State objects with a
+    name containing the letter a from the database hbtn_0e_6_usa
+"""
 
 
-if __name__ == '__main__':
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format
-                           (sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
-    Base.metadata.create_all(engine)
+if __name__ == "__main__":
+
+    from sys import argv
+    from sqlalchemy.orm import sessionmaker
+    from sqlalchemy import (create_engine)
+    from model_state import Base, State
+
+    # Parameter variables
+    user = argv[1]
+    passw = argv[2]
+    database = argv[3]
+
+    # ᐁ Create the engine
+    engine = create_engine(
+                    'mysql+mysqldb://{}:{}@localhost/{}'
+                    .format(user, passw, database), pool_pre_ping=True
+                    )
+    # create the session instant and bind the engine
     Session = sessionmaker(bind=engine)
+    # Create the session
     session = Session()
-    item = session.query(State).filter(State.name.like('%a%'))
-    for it in item:
-        session.delete(it)
+    # Query and delete instant
+    _query = session.query(State).\
+        filter(State.name.contains('a')).\
+        delete(synchronize_session='fetch')
+    """
+    Another way to do it
+    result = session.query(State).all()
+    # for record in result:
+    #     if 'a' in record.name:
+    #         session.delete(record)
+    """
     session.commit()
     session.close()
